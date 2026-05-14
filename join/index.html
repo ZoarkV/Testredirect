@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="utf-8">
+    <title>FreshTrack Einladung</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body { font-family: sans-serif; text-align: center; margin-top: 50px; background-color: #f4f4f4; color: #333; }
+        .box { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); display: inline-block; max-width: 90%; }
+        .btn { display: inline-block; padding: 12px 24px; background: #4CAF50; color: white; text-decoration: none; border-radius: 8px; font-weight: bold; margin-top: 20px;}
+    </style>
+</head>
+<body>
+    <div class="box">
+        <h2>Du wurdest in ein Lager eingeladen! 📦</h2>
+        <p>Die FreshTrack App sollte sich jetzt automatisch öffnen...</p>
+        <p>Falls nichts passiert, klicke hier:</p>
+        <a id="fallback-link" href="#" class="btn">In FreshTrack öffnen</a>
+    </div>
+
+    <script>
+        // 1. Code aus der URL auslesen (z.B. ?code=123456)
+        const urlParams = new URLSearchParams(window.location.search);
+        const code = urlParams.get('code');
+        
+        if(code) {
+            // 2. Den echten Android-App-Link zusammenbauen
+            const appLink = "freshtrack://join?code=" + code;
+            
+            // 3. Den grünen Button updaten (als Backup)
+            document.getElementById('fallback-link').href = appLink;
+            
+            // 4. Magie: Automatische Weiterleitung zur App!
+            window.location.replace(appLink);
+        } else {
+            document.querySelector('.box').innerHTML = "<h2>Fehler: Kein Einladungscode gefunden.</h2>";
+        }
+    </script>
+</body>
+</html>
